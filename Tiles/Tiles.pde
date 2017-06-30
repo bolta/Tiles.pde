@@ -202,7 +202,7 @@ class Diagonal extends Matrix {
 }
 
 /**
- * 容器の中に粉を撒いて積もらせていくように、下から上に向かって塗る。
+ * 上から粉を撒いて積もらせていく要領で、下から上に向かって塗る。
  * 撒き方は getNextX() をオーバーライドして定義する
  */
 abstract class AbstractScattering extends Matrix {
@@ -257,7 +257,10 @@ class Scattering0 extends AbstractScattering {
   }
 }
 
-/** 色を上から撒いていく。x 座標は前回から ±1 の範囲で変化する（山ができやすい） */
+/**
+ * 色を上から撒いていく。x 座標は前回から ±1 の範囲で変化する（山ができやすい）。
+ * 左右の端はつながっている
+ */
 class Scattering1 extends AbstractScattering {
   public Scattering1(int left, int top, int canvasWidth, int canvasHeight,
       int tileWidth, int tileHeight) {
@@ -274,143 +277,129 @@ void saveImage() {
 }
 
 void setup() {
-//  size(displayWidth, displayHeight);
-//  ColorGenerator col = new DefaultColorGenerator(1, 128);
-//  Shape shape = new LToR(0, 0, width, height, 32, 32) {
-//    protected Shape createChildShape(int xIdx, int yIdx,
-//        int x, int y, int tileWidth, int tileHeight) {
-//      return new LToR(x, y, tileWidth, tileHeight, 4, 4);
-//    }
-//  };
+  size(displayWidth, displayHeight);
+ 
+  //ColorGenerator col = new DefaultColorGenerator(8, 1);
+  //Shape shape = new LToR(0, 0, width, height, 16, 16);
 
-//  ColorGenerator col = new DefaultColorGenerator(1, 128);
-//  Shape shape = new LToR(0, 0, width, height, 128, 128) {
-//    protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
-//      return new LToR(x, y, tileWidth, tileHeight, 16, 16) {
-//        protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
-//          return new MonotoneRect(x, y, tileWidth, tileHeight) {
-//            @Override protected color getStrokeColor(color c) { return multiply(0.875, c); } 
-//          };
-//        }
-//      };
-//    }
-//  };
-//  shape.paint(col);
-
-  size(1920, 1080);
-
-//  ColorGenerator col = new DefaultColorGenerator(1, 2); // { protected float adjust(float c) { return wrap(c%256.0); } };
-//  Shape shape =
-//  new Diagonal(0, 0, width, height, 128, 128) {
-//    protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
-//      return new Diagonal(x, y, tileWidth, tileHeight, 64, 64) {
-//        protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
-//          return new Diagonal(x, y, tileWidth, tileHeight,32, 32) {
-//            protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
-//              return new Diagonal(x, y, tileWidth, tileHeight, 16, 16) {
-//                protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
-//                  return new Diagonal(x, y, tileWidth, tileHeight, 8, 8) {
-//                    protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
-//                      return new Diagonal(x, y, tileWidth, tileHeight,  4,  4) {
-//                        protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
-//                          return new Diagonal(x, y, tileWidth, tileHeight,  2,  2) {
-//                            protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
-//                              return new Diagonal(x, y, tileWidth, tileHeight,  1,  1) {
-//                                protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
-//                                  return new MonotoneRect(x, y, tileWidth, tileHeight) {
-//                                    @Override protected color getStrokeColor(color c) { return c; /*multiply(0.875, c);*/ } 
-//                                  };
-//                                }
-//                              };
-//                            }
-//                          };
-//                        }
-//                      };
-//                    }
-//                  };
-//                }
-//              };
-//            }
-//          };
-//        }
-//      };
-//    }
-//  };
-
-  ColorGenerator col = new DefaultColorGenerator(8, 4); // { protected float adjust(float c) { return wrap(c%256.0); } };
-  Shape shape = new LToR(0, 0, width, height, 128, 8);
-
-//  size(220, 220);
-//  ColorGenerator col = new DefaultColorGenerator(1, 8); // { protected float adjust(float c) { return wrap(c%256.0); } };
-//  Shape shape = new Diagonal(0, 0, width, height, 2, 2) {
-//    protected Shape createChildShape(int xIdx, int yIdx,
-//        int x, int y, int tileWidth, int tileHeight) {
-//      return new MonotoneRect(x, y, tileWidth, tileHeight) {
-//        protected color getStrokeColor(color c) {
-//          return c;
-//        }
-//      };
-//    }
-//  };
-
-//  size(displayWidth, displayHeight);
-//  size(1366, 768);
-//  ColorGenerator col = new DefaultColorGenerator(1, 2);
-//  Shape shape = new Diagonal(0, 0, width, height, width/20, height/4) {
-//    protected Shape createChildShape(int xIdx, int yIdx,
-//        int x, int y, int tileWidth, int tileHeight) {
-//      return new LToR(x, y, tileWidth, tileHeight, 4, 4);
-//    }
-//  };
-
-//  size(displayWidth, displayHeight);
-//  ColorGenerator col = new DefaultColorGenerator(1, 2);
-//  Shape shape = new Scattering0(0, 0, width, height, 4, 16) {
-////    protected Shape createChildShape(int xIdx, int yIdx,
-////        int x, int y, int tileWidth, int tileHeight) {
-////      return new Diagonal(x, y, tileWidth, tileHeight, 1, 1);
-////    }
-//  };
-////  new Diagonal(0, 0, width, height, width/20, height/4) {
-////    protected Shape createChildShape(int xIdx, int yIdx,
-////        int x, int y, int tileWidth, int tileHeight) {
-////      return new LToR(x, y, tileWidth, tileHeight, 4, 4);
-////    }
-////  };
-
-//  size(256, 256);
-//  ColorGenerator col = new DefaultColorGenerator(4, 16);
-//  Shape shape = new Diagonal(0, 0, width, height, 16, 16) {
-//    protected Shape createChildShape(int xIdx, int yIdx,
-//        int x, int y, int tileWidth, int tileHeight) {
-//      return new MonotoneRect(x, y, tileWidth, tileHeight) {
-//        protected color getStrokeColor(color c) {
-//          return multiply(0.875, c);
-//        }
-//      };
-//    }
-//  };
+  ////////////////////////////////
   
-//  size(1440, 900);
-//  size(displayWidth, displayHeight);
-//  ColorGenerator col = new DefaultColorGenerator(1, 1);
-////  Shape shape = new LToR(0, 0, width, height, 1, 4) {
-//  Shape shape = new LToR(0, 0, width, height, width/16, height) {
-//    protected Shape createChildShape(int xIdx, int yIdx,
-//        int x, int y, int tileWidth, int tileHeight) {
-//      return new Scattering0(x, y, tileWidth, tileHeight, 4, 4) {
-//        protected Shape createChildShape(int xIdx, int yIdx,
-//            int x, int y, int tileWidth, int tileHeight) {
-//          return new MonotoneRect(x, y, tileWidth, tileHeight) {
-////            protected color getStrokeColor(color c) {
-////              return multiply(1.125, c);
-////            }
-//          };
-//        }
-//      };
-//    }
-//  };
-  shape.paint(col);
+  //ColorGenerator col = new DefaultColorGenerator(8, 4);
+  //Shape shape = new LToR(0, 0, width, height, 128, 8);
 
+  ////////////////////////////////
+
+  //ColorGenerator col = new DefaultColorGenerator(8, 1);
+  //Shape shape = new Diagonal(0, 0, width, height, 16, 16);
+
+  ////////////////////////////////
+
+  //ColorGenerator col = new DefaultColorGenerator(1, 2);
+  //Shape shape = new Scattering0(0, 0, width, height, 16, 4);
+  
+  ////////////////////////////////
+
+  ColorGenerator col = new DefaultColorGenerator(1, 2);
+  Shape shape = new Scattering1(0, 0, width, height, 16, 4);
+
+  ////////////////////////////////
+
+  //ColorGenerator col = new DefaultColorGenerator(1, 128);
+  //Shape shape = new LToR(0, 0, width, height, 128, 128) {
+  //  protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
+  //    return new LToR(x, y, tileWidth, tileHeight, 16, 16) {
+  //      protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
+  //        return new MonotoneRect(x, y, tileWidth, tileHeight) {
+  //          @Override protected color getStrokeColor(color c) { return multiply(0.875, c); } 
+  //        };
+  //      }
+  //    };
+  //  }
+  //};
+
+  ////////////////////////////////
+
+  //ColorGenerator col = new DefaultColorGenerator(1, 2);
+  //Shape shape = new Diagonal(0, 0, width, height, 128, 128) {
+  //  protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
+  //    return new Scattering1(x, y, tileWidth, tileHeight, 4, 4) {
+  //      protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
+  //        return new MonotoneRect(x, y, tileWidth, tileHeight) {
+  //          @Override protected color getStrokeColor(color c) { return multiply(1.125, c); } 
+  //        };
+  //      }
+  //    };
+  //  }
+  //};
+
+  ////////////////////////////////
+
+  //size(displayWidth, displayHeight);
+  //ColorGenerator col = new DefaultColorGenerator(1, 2);
+  //Shape shape = new Diagonal(0, 0, width, height, width/20, height/4) {
+  //  protected Shape createChildShape(int xIdx, int yIdx,
+  //      int x, int y, int tileWidth, int tileHeight) {
+  //    return new LToR(x, y, tileWidth, tileHeight, 4, 4);
+  //  }
+  //};
+
+  ////////////////////////////////
+
+  //ColorGenerator col = new DefaultColorGenerator(1, 1);
+  //Shape shape = new LToR(0, 0, width, height, width/16, height) {
+  //  protected Shape createChildShape(int xIdx, int yIdx,
+  //      int x, int y, int tileWidth, int tileHeight) {
+  //    return new Scattering0(x, y, tileWidth, tileHeight, 4, 4) {
+  //      protected Shape createChildShape(int xIdx, int yIdx,
+  //          int x, int y, int tileWidth, int tileHeight) {
+  //        return new MonotoneRect(x, y, tileWidth, tileHeight);
+  //      }
+  //    };
+  //  }
+  //};
+ 
+  ////////////////////////////////
+
+  //ColorGenerator col = new DefaultColorGenerator(1, 2);
+  //Shape shape =
+  //new Diagonal(0, 0, width, height, 128, 128) {
+  //  protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
+  //    return new Diagonal(x, y, tileWidth, tileHeight, 64, 64) {
+  //      protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
+  //        return new Diagonal(x, y, tileWidth, tileHeight,32, 32) {
+  //          protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
+  //            return new Diagonal(x, y, tileWidth, tileHeight, 16, 16) {
+  //              protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
+  //                return new Diagonal(x, y, tileWidth, tileHeight, 8, 8) {
+  //                  protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
+  //                    return new Diagonal(x, y, tileWidth, tileHeight,  4,  4) {
+  //                      protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
+  //                        return new Diagonal(x, y, tileWidth, tileHeight,  2,  2) {
+  //                          protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
+  //                            return new Diagonal(x, y, tileWidth, tileHeight,  1,  1) {
+  //                              protected Shape createChildShape(int xIdx, int yIdx, int x, int y, int tileWidth, int tileHeight) {
+  //                                return new MonotoneRect(x, y, tileWidth, tileHeight) {
+  //                                  @Override protected color getStrokeColor(color c) { return c; } 
+  //                                };
+  //                              }
+  //                            };
+  //                          }
+  //                        };
+  //                      }
+  //                    };
+  //                  }
+  //                };
+  //              }
+  //            };
+  //          }
+  //        };
+  //      }
+  //    };
+  //  }
+  //};
+
+  ////////////////////////////////
+
+  shape.paint(col);
   saveImage();
 }
